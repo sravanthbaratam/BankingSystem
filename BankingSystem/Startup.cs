@@ -32,8 +32,9 @@ namespace BankingSystem
             services.AddCors();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IBankService, BankService>();
-            //services.AddTransient<IBankingSystemDBConnection, BankingSystemDBConnection>();
-            //services.AddTransient<IUpdateBankingSystemDB, UpdateBankingSystemDB>();
+            services.AddSingleton<IBankingSystemDBConnection, BankingSystemDBConnection>();
+            services.AddSingleton<IUpdateBankingSystemDB, UpdateBankingSystemDB>();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
