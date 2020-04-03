@@ -1,0 +1,54 @@
+﻿<br />
+<h3 class="col text-center">Customer Enquiry</h3>
+<div class="col">
+    <div class="form-group row" id="errorDiv"></div>
+    <div class="form-group row">
+        <label for="AccountType" class="col-2 col-form-label text-md-left">Type of Account</label>
+        <div class="col-md-2">
+            <select id="AccountType" class="form-control" name="AccountType" autofocus>
+                <option value="">Select Account Type</option>
+                <option value=1>Savings</option>
+                <option value=2>Current</option>
+                <option value=3>Fixed Deposit</option>
+                <option value=4>DEMAT</option>
+                <option value=5>NRI</option>
+                <option value=6>Salary</option>
+            </select>
+        </div>
+    </div>    
+</div>
+<div class="col">
+    <table class="table table-striped table-bordered" id="serviceTable">
+        <thead class="thead-light">
+            <tr class="text-white text-center">
+                <th class="bg-success text-white">Type of Account</th>
+                <th class="bg-success text-white">Interest Rate</th>
+                <th class="bg-success text-white">Minimum Balance</th>
+                <th class="bg-success text-white">Cheque Book</th>
+                <th class="bg-success text-white">Debit Card</th>
+                <th class="bg-success text-white">Credit Card</th>                
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            <tr class="text-center">
+                <td id="TypeAccount"></td>
+                <td id="InterestRate"></td>
+                <td id="MinimumBalance"></td>
+                <td id="ChequeBook"></td>
+                <td id="DebitCard"></td>
+                <td id="CreditCard"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    jQuery("#AccountType").on("change", function () {
+        var type = this.value;
+        jQuery("#TypeAccount").html(Request.getAccountType(type));
+        jQuery("#InterestRate").html(Request.getInterest(type)+" %");
+        jQuery("#MinimumBalance").html(Request.getBalance(type)+" INR");
+        jQuery("#ChequeBook").html(Request.getCheque(type));
+        jQuery("#DebitCard").html(Request.getDebit(type));
+        jQuery("#CreditCard").html(Request.getCredit(type));
+    });
+</script>

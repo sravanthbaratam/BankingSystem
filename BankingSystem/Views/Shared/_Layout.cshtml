@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eBankingSystem</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/w/dt/jszip-2.5.0/dt-1.10.18/b-1.5.6/b-html5-1.5.6/b-print-1.5.6/r-2.2.2/datatables.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/css/site.css" />    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.js" type="text/javascript" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js" type="text/javascript" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/w/dt/jszip-2.5.0/dt-1.10.18/b-1.5.6/b-html5-1.5.6/b-print-1.5.6/r-2.2.2/datatables.js" type="text/javascript" crossorigin="anonymous"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            if (jQuery.cookie("isLoggedIn")) {
+                jQuery("#userName").html(jQuery.cookie("user"));
+                if (jQuery.cookie("role") == "user") {
+                    Request.showCMenu();
+                    Request.showCustomer();
+                }
+                else if (jQuery.cookie("role") == "admin") {
+                    Request.showBMenu();
+                    Request.showBank();
+                }
+                else {
+                    Request.showMenu();
+                    Request.showErrorPage();
+                }
+            }
+            else {
+                Request.showMenu();
+                Request.showHome();
+            }
+        });
+    </script>
+</head>
+    <body>
+        <div class="row" id="menuDiv"></div>
+        <div class="col container body-content" id="bodyDiv">@RenderBody()</div>
+        <hr />
+        <footer class="text-justify text-center">
+            <p>&copy; 2019 - Wipro BankingSystem</p>
+        </footer>
+        <hr />
+    </body>
+</html>

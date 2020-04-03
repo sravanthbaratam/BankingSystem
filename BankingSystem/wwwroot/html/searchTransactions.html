@@ -1,0 +1,102 @@
+﻿<br />
+<h6 class="col text-center">Transaction Search</h6>
+<div class="col">
+    <div class="col" id="errorDiv"></div>
+    <form method="post" id="searchForm">
+        <div class="form-group row" id="errorDiv"></div>
+        <div class="form-group row">
+            <label for="timeStamp" class="col-2 col-form-label text-md-left">Transaction Date</label>
+            <div class="col-md-2">
+                <input type="date" id="timeStamp" class="form-control" name="timeStamp" required autofocus>                
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="form-control btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="col">
+    <table class="table table-striped table-bordered" id="transactionTable">
+        <caption>List of Transactions</caption>
+        <thead class="thead-light">
+            <tr class="text-white text-center">
+                <th class="bg-success text-white">TransactionId</th>
+                <th class="bg-success text-white">TransactionType</th>
+                <th class="bg-success text-white">Amount</th>
+                <th class="bg-success text-white">RecieverAccount</th>
+                <th class="bg-success text-white">TimeStamp</th>
+            </tr>
+        </thead>
+        <tbody id="transactionbody"></tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var body = null;
+        var data = { AccountNumber: jQuery.cookie("user") };
+        var response = Request.post("/Bank/ViewTransactions", data);
+        if (response.successfull) {
+            if (response.responseObject.transactions.length > 0) {
+                for (i = 0; i <= response.responseObject.transactions.length - 1; i++) {
+                    body += "<tr>";
+                        body += "<td class='text-right'>" + response.responseObject.transactions[i].transactionId + "</td>";                        
+                        body += "<td>" + Request.getTransactionType(response.responseObject.transactions[i].transactionType) + "</td>";
+                        body += "<td class='text-right'>" + response.responseObject.transactions[i].amount + "</td>";
+                        body += "<td class='text-right'>" + response.responseObject.transactions[i].recieverAccount + "</td>";
+                        body += "<td class='text-center'>" + response.responseObject.transactions[i].timeStamp + "</td>";
+                    body += "</tr>";
+                }
+            }
+            else {
+                body = null;
+                body += "<tr>";
+                body += "<td colspan = '5' class='text-center'>We did not found any transaction(s) in your account</td>";
+                body += "</tr>";            
+            }
+        }
+        else {
+            body = null;
+            body += "<tr>";
+            body += "<td colspan = '5' class='text-center'>We did not found any transaction(s) in your account</td>";
+            body += "</tr>";
+            Request.showError(response.errorMessage);
+        }
+        jQuery("#transactionbody").html(body);
+        jQuery("#transactionTable").DataTable();
+    });
+
+    jQuery("#searchForm").submit(function (event) {
+        event.preventDefault();
+        var body = null;
+        var data = { AccountNumber: jQuery.cookie("user"), TimeStamp : jQuery("#timeStamp").val() };
+        var response = Request.post("/Bank/DateTransactions", data);
+        if (response.successfull) {
+            if (response.responseObject.transactions.length > 0) {
+                for (i = 0; i <= response.responseObject.transactions.length - 1; i++) {
+                    body += "<tr>";
+                    body += "<td class='text-right'>" + response.responseObject.transactions[i].transactionId + "</td>";
+                    body += "<td>" + Request.getTransactionType(response.responseObject.transactions[i].transactionType) + "</td>";
+                    body += "<td class='text-right'>" + response.responseObject.transactions[i].amount + "</td>";
+                    body += "<td class='text-right'>" + response.responseObject.transactions[i].recieverAccount + "</td>";
+                    body += "<td class='text-center'>" + response.responseObject.transactions[i].timeStamp + "</td>";
+                    body += "</tr>";
+                }
+            }
+            else {
+                body = null;
+                body += "<tr>";
+                body += "<td colspan = '5' class='text-center'>We did not found any transaction(s) in your account</td>";
+                body += "</tr>";            
+            }
+        }
+        else {
+            body = null;
+            body += "<tr>";
+            body += "<td colspan = '5' class='text-center'>We did not found any transaction(s) in your account</td>";
+            body += "</tr>";
+            Request.showError(response.errorMessage);
+        }
+        jQuery("#transactionbody").html(body);
+        jQuery("#transactionTable").DataTable();
+    });
+</script>

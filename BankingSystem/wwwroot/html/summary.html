@@ -1,0 +1,51 @@
+﻿<br />
+<h6 class="col text-center">Account Summary Page</h6>
+<div class="col">
+    <div class="col" id="errorDiv"></div>
+    <table class="table table-striped table-bordered" id="serviceTable">
+        <caption>Account Summary</caption>
+        <thead class="thead-light">
+            <tr class="text-white text-center">
+                <th class="bg-success text-white">Name</th>
+                <th class="bg-success text-white">Account Number</th>
+                <th class="bg-success text-white">Account Type</th>
+                <th class="bg-success text-white">Balance</th>
+                <th class="bg-success text-white">Email</th>
+                <th class="bg-success text-white">Mobile</th>
+                <th class="bg-success text-white">Address</th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function ()
+    {
+        var html = null;
+        var data = { AccountNumber: jQuery.cookie("user")};
+        var response = Request.post("/Bank/AccountSummary", data);
+        if (response.successfull)
+        {
+            html = null;
+            html += "<tr>";
+            html += "<td>" + response.responseObject.name + "</td>";
+            html += "<td class='text-right'>" + response.responseObject.accountNumber + "</td>";
+            html += "<td>" + Request.getAccountType(response.responseObject.accountType) + "</td>";
+            html += "<td class='text-right'>" + response.responseObject.balance + "</td>";
+            html += "<td>" + response.responseObject.email + "</td>";
+            html += "<td class='text-right'>" + response.responseObject.mobile + "</td>";
+            html += "<td>" + response.responseObject.address + "</td>";
+            html += "</tr>";                       
+        }
+        else
+        {
+            html = null;
+            html += "<tr>";
+            html += "<td colspan = '6' class='text-center'>" + response.errorMessage + "</td>";
+            html += "</tr>";
+            Request.showError(response.errorMessage);
+        }
+        jQuery("#tbody").html(html); 
+        jQuery("#serviceTable").DataTable();
+    });
+</script>

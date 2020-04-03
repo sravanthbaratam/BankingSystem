@@ -1,0 +1,20 @@
+﻿<nav class="col-12 navbar navbar-expand-md bg-info">
+    <a class="navbar-brand text-white" href="#">Banking System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#linkMenu" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="linkMenu">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item cursor"><a href="#" class="nav-link text-white">Welcome! <i class="fa fa-user"></i> <b id="userName"></b></a></li>
+            <li class="nav-item cursor"><a onClick="Request.showCustomer();" class="nav-link"><i class="fa fa-home"></i> Home</a></li>
+            <li class="nav-item cursor"><a onClick="Request.showSummary();" class="nav-link"><i class="fa fa-address-card-o"></i> Summary</a></li>
+            <li class="nav-item cursor"><a onClick="Request.chequeBook();" class="nav-link"><i class="fa fa-credit-card"></i> ChequeuBook</a></li>
+            <li class="nav-item cursor"><a onClick="Request.addTransaction();" class="nav-link"><i class="fa fa-plus"></i> Transaction</a></li>
+            <li class="nav-item cursor"><a onClick="Request.viewTransactions();" class="nav-link"><i class="fa fa-eye"></i> Transaction</a></li>
+            <li class="nav-item cursor"><a onClick="Request.searchTransactions();" class="nav-link"><i class="fa fa-search"></i> Transaction</a></li>
+            <li class="nav-item cursor"><a onClick="Request.enquiry();" class="nav-link"><i class="fa fa-wechat"></i> Enquiry</a></li>
+        </ul>
+        <a onClick="Request.changePassword();" class="nav-link text-white cursor"><i class="fa fa-pencil"></i> Password</a>
+        <a onClick="Request.showLogout();" class="nav-link text-white cursor"><i class="fa fa-sign-out"></i> Signout</a>
+    </div>
+</nav>
