@@ -87,9 +87,13 @@
         Request.showPage("html/transaction.html", "bodyDiv");
     },
 
-    //addCustomer: function () {
-    //    Request.addCustomer();
-    //}
+    addCustomer: function () {
+        Request.showPage("html/addcustomer.html", "bodyDiv")
+    },
+
+    removeCustomer: function () {
+        Request.showPage("html/removeCustomer.html", "bodyDiv")
+    },
 
     viewTransactions: function () {
         Request.showPage("html/viewTransactions.html", "bodyDiv");

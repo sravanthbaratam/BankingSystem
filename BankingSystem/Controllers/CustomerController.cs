@@ -25,6 +25,16 @@ namespace BankingSystem.Controllers
         }
 
         [HttpPost]
+        public JsonResult Remove([FromBody]Account account)
+        {
+            Response response = new Response();
+            response.errorMessage = String.Empty;
+            response.Successfull = false;
+            response = _customerService.RemoveCustomer(account, response);
+            return Json(response);
+        }
+
+        [HttpPost]
         public JsonResult Authenticate([FromBody]User user)
         {
             Response response = new Response();

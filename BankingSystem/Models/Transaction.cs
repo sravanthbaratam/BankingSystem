@@ -5,11 +5,28 @@ namespace BankingSystem.Models
     public class Transaction
     {
         public long TransactionId { set; get; }
-        public long AccountNumber { set; get; }
+        public int AccountNumber { set; get; }
         public int TransactionType { set; get; }
         public float Amount { set; get; }
         public long RecieverAccount { set; get; }
         public DateTime TimeStamp { set; get; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            Account objAsPart = obj as Account;
+            if (objAsPart == null) return false;
+            else return Equals(objAsPart);
+        }
+        public override int GetHashCode()
+        {
+            return AccountNumber;
+        }
+        public bool Equals(Account other)
+        {
+            if (other == null) return false;
+            return (this.AccountNumber.Equals(other.AccountNumber));
+        }
 
     }
 

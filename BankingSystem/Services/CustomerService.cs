@@ -72,7 +72,78 @@ namespace BankingSystem.Services
             _updateBankingSystemDB.UpdateAccounts(accountPath);
             _updateBankingSystemDB.UpdateCredentials(credentialPath);            
             return response;
-        }        
+        }
+
+        public Response RemoveCustomer(Account account, Response response)
+        {
+            //update all
+            string fileDirectory = Path.Combine(_hostingEnv.ContentRootPath, string.Format("Storage"));
+            string accountPath = Path.Combine(fileDirectory, "accounts" + Constants.JsonFormat);
+            string credentialPath = Path.Combine(fileDirectory, "credentials" + Constants.JsonFormat);
+            string chequePath = Path.Combine(fileDirectory, "cheque" + Constants.JsonFormat);
+            //fileDirectory = Path.Combine(_hostingEnv.ContentRootPath, string.Format("Storage//" + account.AccountNumber));
+            //string transactionPath = Path.Combine(fileDirectory, "transactions" + Constants.JsonFormat);
+
+            try
+            {
+                ////Adding a new customer to bank by generating account number, balance and password
+                //account.AccountNumber = GenerateRandomNumber(999999999);
+                //account.Balance = GenerateRandomNumber(999999);
+
+                ////User Credentials
+                User user = new User();
+                user.AccountNumber = account.AccountNumber;
+                ChequeBook cheque = new ChequeBook();
+                cheque.AccountNumber = account.AccountNumber;
+                //user.Password = GeneratePassword();
+                //user.Role = "user";
+
+                bool folderExists = Directory.Exists(fileDirectory);
+                if (folderExists)
+                {
+                    bool fileExists = File.Exists(accountPath);
+                    List<Account> accounts = new List<Account>();
+                    if (fileExists)
+                    {
+                        accounts = JsonConvert.DeserializeObject<List<Account>>(GetJsonFileContents(accountPath));
+                    }
+                    accounts.Remove(account);
+                    File.WriteAllText(accountPath, JsonConvert.SerializeObject(accounts));
+
+                    fileExists = File.Exists(credentialPath);
+                    List<User> users = new List<User>();
+                    if (fileExists)
+                    {
+                        users = JsonConvert.DeserializeObject<List<User>>(GetJsonFileContents(credentialPath));
+                    }
+                    users.Remove(user);
+                    File.WriteAllText(credentialPath, JsonConvert.SerializeObject(users));
+
+
+                    fileExists = File.Exists(chequePath);
+                    List<ChequeBook> chequeBooks = new List<ChequeBook>();
+                    if (fileExists)
+                    {
+                        chequeBooks = JsonConvert.DeserializeObject<List<ChequeBook>>(GetJsonFileContents(chequePath));
+                    }
+                    chequeBooks.Remove(cheque);
+                    File.WriteAllText(chequePath, JsonConvert.SerializeObject(chequeBooks));
+                }
+
+                response.Successfull = true;
+                response.ResponseObject = user;
+            }
+            catch (Exception e)
+            {
+                response.errorMessage = e.Message;
+                response.Successfull = false;
+                response.ResponseObject = null;
+            }
+            _updateBankingSystemDB.UpdateAccounts(accountPath);
+            _updateBankingSystemDB.UpdateCheque(chequePath);
+            _updateBankingSystemDB.UpdateCredentials(credentialPath);
+            return response;
+        }
 
         public Response Authenticate(User user, Response response)
         {
@@ -186,7 +257,7 @@ namespace BankingSystem.Services
                 && password.Length <= Constants.PASSWORD_LENGTH_MAX;
         }
 
-        public Int64 GenerateRandomNumber(int maxValue)
+        public int GenerateRandomNumber(int maxValue)
         {
             Random random = new Random();
             return random.Next(maxValue);

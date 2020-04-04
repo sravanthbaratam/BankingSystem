@@ -1,38 +1,90 @@
 ﻿<br />
-<h5 class="col text-center">Cheque Book Request</h5>
-<div class="col">
-    <div class="col-12 text-justify" id="errorDiv"></div>
-    <div class="col-12">
-        <h6 class="text-capitalize text-left">Instructions</h6>
-        <p>
-            You need to complete your KYC to be eligible for a cheque book. You can visit your Wipro Bank branch to complete your KYC. Post completion of KYC, you can place a request to get your signature updated in Bank's records.
-            You will need to place a request for a Cheque Book once you have completed your KYC. You can visit your nearest Wipro Bank branch to complete your KYC. Please carry your recent photograph, PAN Card and any of the documents listed below:
-        </p>
-        <ol>
-            <li class="text-capitalize text-justify">Valid Passport</li>
-            <li class="text-capitalize text-justify">Pan card (separate address proof required)</li>
-            <li class="text-capitalize text-justify">E-Aadhaar letter downloaded from UIDAI site/Aadhaar card issued by government of India.</li>
-            <li class="text-capitalize text-justify">
-                Valid Permanent Driving license
-                <ul>
-                    <li>DL issued by state of Maharashtra not acceptable as address proof document.</li>
-                    <li>Driving License, irrespective of the same being issued in any state, if it bears a notation "Not to be accepted as address proof" then the same will not be acceptable as address proof. The same can still be accepted as identity proof</li>
-                </ul>
-            </li>
-            <li class="text-capitalize text-justify">Election Card / Voter's ID card</li>
-            <li class="text-capitalize text-justify">Job card issued by NREGA</li>
-        </ol>
-        <p class="text-capitalize text-justify">I accept terms & conditions to request for a cheque book for my Account.</p>
-        <button class="btn btn-primary" id="chequeBtn">Request</button>
+<main class="col login-form text-justify">
+    <div class="cotainer">
+        <div class="col">
+            <div class="col-md-5">
+                <div class="card bg-primary">
+                    <div class="card-header text-center text-white">Login</div>
+                    <div class="card-body bg-light">
+                        <form method="post" id="loginForm">
+                            <div class="form-group row" id="errorDiv"></div>
+
+                            <div class="form-group row">
+                                <label for="AadhaarNumber" class="col-md-4 col-form-label text-md-left">Aadhaar Number</label>
+                                <div class="col-md-6">
+                                    <input type="number" id="AadhaarNumber" class="form-control" name="AadhaarNumber" max=999999999999 min=10000000000 required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="AccountType" class="col-md-4 col-form-label text-md-left">Account Type</label>
+                                <div class="col-md-6">
+                                    <input type="number" id="AccountType" class="form-control" name="AccountType" max=2 min=0 required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="Address" class="col-md-4 col-form-label text-md-left">Address</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="Address" class="form-control" name="Address" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="Email" class="col-md-4 col-form-label text-md-left">Email</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="Email" class="form-control" name="Email" required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="Mobile" class="col-md-4 col-form-label text-md-left">Mobile Number</label>
+                                <div class="col-md-6">
+                                    <input type="number" id="Mobile" class="form-control" name="Mobile" max=9999999999 min=1000000000 required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="Name" class="col-md-4 col-form-label text-md-left">Name</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="Name" class="form-control" name="Name" required autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="Pan" class="col-md-4 col-form-label text-md-left">Pan</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="Pan" class="form-control" name="Pan" required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <button type="submit" class="offset-md-4 btn btn-primary">
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</main>
 <script type="text/javascript">
-    jQuery("#chequeBtn").click(function ()
-    {
-        var data = { AccountNumber: jQuery.cookie("user")};
-        var response = Request.post("/Bank/ChequeBook", data);
+    jQuery("#loginForm").submit(function (event) {
+        event.preventDefault();
+        var AadhaarNumber = jQuery("#AadhaarNumber").val();
+        var AccountType = jQuery("#AccountType").val();
+        var Address = jQuery("#Address").val();
+        var Email = jQuery("#Email").val();
+        var Mobile = jQuery("#Mobile").val();
+        var Name = jQuery("#Name").val();
+        var Pan = jQuery("#Pan").val();
+
+        var data = {
+            AadhaarNumber: AadhaarNumber, AccountType: AccountType, Address: Address, Email: Email, Mobile: Mobile, Name: Name, Pan: Pan };
+        var response = Request.post("/Customer/Add", data);
         if (response.successfull) {
-            Request.showSuccess("Congratulations! We took your request for cheque book and is sent for verification.");
+            Request.showSuccess("Successfully add customer");
         }
         else {
             Request.showError(response.errorMessage);

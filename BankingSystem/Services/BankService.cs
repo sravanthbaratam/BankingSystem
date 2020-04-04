@@ -300,7 +300,7 @@ namespace BankingSystem.Services
                 response.ResponseObject = null;
             }
             _updateBankingSystemDB.UpdateCheque(chequePath);
-            _updateBankingSystemDB.UpdateAccounts(accountPath);
+            //_updateBankingSystemDB.UpdateAccounts(accountPath);
             return response;
         }
     }
