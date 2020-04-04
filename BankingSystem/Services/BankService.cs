@@ -60,7 +60,7 @@ namespace BankingSystem.Services
 
         public Response AddTransaction(Transaction transaction, Response response)
         {
-            //update accounts
+            //update accounts and transactions
             string fileDirectory = Path.Combine(_hostingEnv.ContentRootPath, string.Format("Storage"));
             string accountPath = Path.Combine(fileDirectory, "accounts" + Constants.JsonFormat);
 
@@ -124,6 +124,7 @@ namespace BankingSystem.Services
                 response.ResponseObject = null;
             }
             _updateBankingSystemDB.UpdateAccounts(accountPath);
+            _updateBankingSystemDB.UpdateTransactions(transactionPath);
             return response;
         }
 

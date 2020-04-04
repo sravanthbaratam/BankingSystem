@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using BankingSystem.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -7,13 +8,6 @@ namespace BankingSystem.Services
 {
     public class BankingSystemDBConnection : IBankingSystemDBConnection
     {
-        // requires using Microsoft.Extensions.Configuration;
-        private readonly IConfiguration Configuration;
-
-        public BankingSystemDBConnection(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
 
         public void CloseConnection(SqlConnection connection)
         {
@@ -35,7 +29,7 @@ namespace BankingSystem.Services
         public SqlConnection GetConnections()
         {
             SqlConnection connection;
-            var connetionString = Configuration["ConnectionStrings"];
+            var connetionString = ConfigurationManager.AppSettings["bSDBConnection"].ToString();
 
             connection = new SqlConnection(connetionString);
             connection.Open();

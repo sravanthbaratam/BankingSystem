@@ -1,31 +1,26 @@
 ﻿using BankingSystem.Interfaces;
-using System;
+using System.Configuration;
 using System.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using System.IO;
 
 namespace BankingSystem.Services
 {
     public class UpdateBankingSystemDB : IUpdateBankingSystemDB
     {
-        private readonly IBankingSystemDBConnection _bankingSystemDBConnection;
-        public SqlConnection connection;
-        private readonly IConfiguration Configuration;
         
-        private UpdateBankingSystemDB(IBankingSystemDBConnection bSDBConnection, SqlConnection connection, IConfiguration configuration)
-        {
-            _bankingSystemDBConnection = bSDBConnection;
-            Configuration = configuration;
-            this.connection = connection;        
-        }
+        public SqlConnection connection;
+
+        public IBankingSystemDBConnection bankingSystemDBConnection = new BankingSystemDBConnection();
 
         public void UpdateAccounts(string accountsJson)
         {
-            string spName = Convert.ToString(Configuration["UpdateAccounts"]);
+            connection = bankingSystemDBConnection.GetConnections();
+            string spName = ConfigurationManager.AppSettings["SP_UpdateAccounts"];
             StreamReader sr = new StreamReader(accountsJson);
             string accountsJsonString = sr.ReadToEnd();
+            sr.Close();
 
-            var command = _bankingSystemDBConnection.GetCommand(spName, connection);
+            var command = bankingSystemDBConnection.GetCommand(spName, connection);
             command.Parameters.AddWithValue("@accountsJson", accountsJsonString);
             command.ExecuteNonQuery();
             command.Dispose();
@@ -33,11 +28,13 @@ namespace BankingSystem.Services
 
         public void UpdateCredentials(string credentialsJson)
         {
-            string spName = Convert.ToString(Configuration["UpdateCredentials"]);
+            connection = bankingSystemDBConnection.GetConnections();
+            string spName = ConfigurationManager.AppSettings["SP_UpdateCredentials"];
             StreamReader sr = new StreamReader(credentialsJson);
             string credentialsJsonString = sr.ReadToEnd();
+            sr.Close();
 
-            var command = _bankingSystemDBConnection.GetCommand(spName, connection);
+            var command = bankingSystemDBConnection.GetCommand(spName, connection);
             command.Parameters.AddWithValue("@credentialsJson", credentialsJsonString);
             command.ExecuteNonQuery();
             command.Dispose();
@@ -45,12 +42,28 @@ namespace BankingSystem.Services
 
         public void UpdateCheque(string chequeJson)
         {
-            string spName = Convert.ToString(Configuration["UpdateCheque"]);
+            connection = bankingSystemDBConnection.GetConnections();
+            string spName = ConfigurationManager.AppSettings["SP_UpdateCheque"];
             StreamReader sr = new StreamReader(chequeJson);
             string chequeJsonString = sr.ReadToEnd();
+            sr.Close();
 
-            var command = _bankingSystemDBConnection.GetCommand(spName, connection);
+            var command = bankingSystemDBConnection.GetCommand(spName, connection);
             command.Parameters.AddWithValue("@chequeJson", chequeJsonString);
+            command.ExecuteNonQuery();
+            command.Dispose();
+        }
+
+        public void UpdateTransactions(string transactionsJson)
+        {
+            connection = bankingSystemDBConnection.GetConnections();
+            string spName = ConfigurationManager.AppSettings["SP_UpdateTransactions"];
+            StreamReader sr = new StreamReader(transactionsJson);
+            string transactionsJsonString = sr.ReadToEnd();
+            sr.Close();
+
+            var command = bankingSystemDBConnection.GetCommand(spName, connection);
+            command.Parameters.AddWithValue("@transactionsJson", transactionsJsonString);
             command.ExecuteNonQuery();
             command.Dispose();
         }

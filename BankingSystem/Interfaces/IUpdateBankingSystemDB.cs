@@ -8,5 +8,7 @@
 
         void UpdateCheque(string chequeJson);
 
+        void UpdateTransactions(string transactionsJson);
+
     }
 }
