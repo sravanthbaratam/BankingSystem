@@ -4,7 +4,7 @@
         <div class="col">
             <div class="col-md-5">
                 <div class="card bg-primary">
-                    <div class="card-header text-center text-white">Login</div>
+                    <div class="card-header text-center text-white">Add Customer</div>
                     <div class="card-body bg-light">
                         <form method="post" id="loginForm">
                             <div class="form-group row" id="errorDiv"></div>
@@ -59,7 +59,7 @@
 
                             <div class="form-group col-md-12">
                                 <button type="submit" class="offset-md-4 btn btn-primary">
-                                    Login
+                                    Add Customer
                                 </button>
                             </div>
                         </form>
@@ -83,10 +83,12 @@
         var data = {
             AadhaarNumber: AadhaarNumber, AccountType: AccountType, Address: Address, Email: Email, Mobile: Mobile, Name: Name, Pan: Pan };
         var response = Request.post("/Customer/Add", data);
-        if (response.successfull) {
-            Request.showSuccess("Successfully add customer");
+        if (response.successfull)
+        {
+            Request.showSuccess("Successfully added customer");
         }
-        else {
+        else
+        {
             Request.showError(response.errorMessage);
         }
     });

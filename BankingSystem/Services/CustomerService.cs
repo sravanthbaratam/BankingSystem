@@ -81,22 +81,12 @@ namespace BankingSystem.Services
             string accountPath = Path.Combine(fileDirectory, "accounts" + Constants.JsonFormat);
             string credentialPath = Path.Combine(fileDirectory, "credentials" + Constants.JsonFormat);
             string chequePath = Path.Combine(fileDirectory, "cheque" + Constants.JsonFormat);
-            //fileDirectory = Path.Combine(_hostingEnv.ContentRootPath, string.Format("Storage//" + account.AccountNumber));
-            //string transactionPath = Path.Combine(fileDirectory, "transactions" + Constants.JsonFormat);
-
             try
             {
-                ////Adding a new customer to bank by generating account number, balance and password
-                //account.AccountNumber = GenerateRandomNumber(999999999);
-                //account.Balance = GenerateRandomNumber(999999);
-
-                ////User Credentials
                 User user = new User();
                 user.AccountNumber = account.AccountNumber;
                 ChequeBook cheque = new ChequeBook();
                 cheque.AccountNumber = account.AccountNumber;
-                //user.Password = GeneratePassword();
-                //user.Role = "user";
 
                 bool folderExists = Directory.Exists(fileDirectory);
                 if (folderExists)
@@ -118,7 +108,6 @@ namespace BankingSystem.Services
                     }
                     users.Remove(user);
                     File.WriteAllText(credentialPath, JsonConvert.SerializeObject(users));
-
 
                     fileExists = File.Exists(chequePath);
                     List<ChequeBook> chequeBooks = new List<ChequeBook>();
