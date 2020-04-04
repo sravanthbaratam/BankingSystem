@@ -87,6 +87,10 @@
         Request.showPage("html/transaction.html", "bodyDiv");
     },
 
+    //addCustomer: function () {
+    //    Request.addCustomer();
+    //}
+
     viewTransactions: function () {
         Request.showPage("html/viewTransactions.html", "bodyDiv");
     },

@@ -59,6 +59,9 @@ namespace BankingSystem
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                //routes.MapRoute(
+                //    name: "customer",
+                //    template: "{controller=Customer}/{action=Index}/{id?}");
             });
         }
     }

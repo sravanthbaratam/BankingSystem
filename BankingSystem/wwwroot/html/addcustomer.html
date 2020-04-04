@@ -1,0 +1,41 @@
+﻿<br />
+<h5 class="col text-center">Cheque Book Request</h5>
+<div class="col">
+    <div class="col-12 text-justify" id="errorDiv"></div>
+    <div class="col-12">
+        <h6 class="text-capitalize text-left">Instructions</h6>
+        <p>
+            You need to complete your KYC to be eligible for a cheque book. You can visit your Wipro Bank branch to complete your KYC. Post completion of KYC, you can place a request to get your signature updated in Bank's records.
+            You will need to place a request for a Cheque Book once you have completed your KYC. You can visit your nearest Wipro Bank branch to complete your KYC. Please carry your recent photograph, PAN Card and any of the documents listed below:
+        </p>
+        <ol>
+            <li class="text-capitalize text-justify">Valid Passport</li>
+            <li class="text-capitalize text-justify">Pan card (separate address proof required)</li>
+            <li class="text-capitalize text-justify">E-Aadhaar letter downloaded from UIDAI site/Aadhaar card issued by government of India.</li>
+            <li class="text-capitalize text-justify">
+                Valid Permanent Driving license
+                <ul>
+                    <li>DL issued by state of Maharashtra not acceptable as address proof document.</li>
+                    <li>Driving License, irrespective of the same being issued in any state, if it bears a notation "Not to be accepted as address proof" then the same will not be acceptable as address proof. The same can still be accepted as identity proof</li>
+                </ul>
+            </li>
+            <li class="text-capitalize text-justify">Election Card / Voter's ID card</li>
+            <li class="text-capitalize text-justify">Job card issued by NREGA</li>
+        </ol>
+        <p class="text-capitalize text-justify">I accept terms & conditions to request for a cheque book for my Account.</p>
+        <button class="btn btn-primary" id="chequeBtn">Request</button>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery("#chequeBtn").click(function ()
+    {
+        var data = { AccountNumber: jQuery.cookie("user")};
+        var response = Request.post("/Bank/ChequeBook", data);
+        if (response.successfull) {
+            Request.showSuccess("Congratulations! We took your request for cheque book and is sent for verification.");
+        }
+        else {
+            Request.showError(response.errorMessage);
+        }
+    });
+</script>
