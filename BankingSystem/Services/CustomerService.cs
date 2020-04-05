@@ -38,6 +38,9 @@ namespace BankingSystem.Services
                 user.Password = GeneratePassword();
                 user.Role = "user";
 
+                //response.AccountNumber = user.AccountNumber;
+                //response.Password = user.Password;
+
                 bool folderExists = Directory.Exists(fileDirectory);
                 if (folderExists)
                 {

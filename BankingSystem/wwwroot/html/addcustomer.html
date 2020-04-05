@@ -83,9 +83,14 @@
         var data = {
             AadhaarNumber: AadhaarNumber, AccountType: AccountType, Address: Address, Email: Email, Mobile: Mobile, Name: Name, Pan: Pan };
         var response = Request.post("/Customer/Add", data);
+
+        //var AccountNumber = response.AccountNumber;
+        //var Password = response.response.Password;
+        var c = response.ResponseObject.AccountNumber;
+        
         if (response.successfull)
         {
-            Request.showSuccess("Successfully added customer");
+            Request.showSuccess("Successfully added customer : ");
         }
         else
         {

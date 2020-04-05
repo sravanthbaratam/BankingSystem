@@ -55,6 +55,8 @@ namespace BankingSystem.Models
         public Object ResponseObject { get; set; }
         public string errorMessage { get; set; }
         public bool Successfull { get => successfull; set => successfull = value; }
+        //public int AccountNumber { get; set; }
+        //public string Password { get; set; }
     }
 }
 // CurrentDate = Convert.ToDateTime(DateTime.Now.ToString("dd-MMM-yyyy"));

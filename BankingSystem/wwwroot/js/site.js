@@ -92,7 +92,7 @@
     },
 
     removeCustomer: function () {
-        Request.showPage("html/removecustomer.html", "bodyDiv")
+        Request.showPage("html/removeCustomer.html", "bodyDiv")
     },
 
     viewTransactions: function () {

@@ -4,21 +4,21 @@
         <div class="col">
             <div class="col-md-5">
                 <div class="card bg-primary">
-                    <div class="card-header text-center text-white">Remove Customer</div>
+                    <div class="card-header text-center text-white">remove Customer</div>
                     <div class="card-body bg-light">
                         <form method="post" id="loginForm">
-
                             <div class="form-group row" id="errorDiv"></div>
 
                             <div class="form-group row">
                                 <label for="AccountNumber" class="col-md-4 col-form-label text-md-left">Account Number</label>
                                 <div class="col-md-6">
-                                    <input type="number" id="AccountNumber" class="form-control" name="AccountNumber" max=999999999 min=100000000 required autofocus>
+                                    <input type="number" id="AccountNumber" class="form-control" name="AccountNumber" max = 999999999 min =100000000 required autofocus>
                                 </div>
                             </div>
+
                             <div class="form-group col-md-12">
                                 <button type="submit" class="offset-md-4 btn btn-primary">
-                                    Remove Customer
+                                    remove Customer
                                 </button>
                             </div>
                         </form>
@@ -29,19 +29,18 @@
     </div>
 </main>
 <script type="text/javascript">
-    jQuery("#loginForm").submit(function(event)
-    {
+    jQuery("#loginForm").submit(function (event) {
         event.preventDefault();
         var AccountNumber = jQuery("#AccountNumber").val();
-        var data = { AccountNumber: AccountNumber };
+
+        var data = {
+            AccountNumber: AccountNumber
+        };
         var response = Request.post("/Customer/Remove", data);
-        Request.showSucess("success");
-        if (response.successfull)
-        {
-            Request.showSucess("Removed the Customer Successfully.");
+        if (response.successfull) {
+            Request.showSuccess("Successfully remove customer  " + AccountNumber.toString());
         }
-        else
-        {
+        else {
             Request.showError(response.errorMessage);
         }
     });
