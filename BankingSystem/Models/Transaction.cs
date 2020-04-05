@@ -8,7 +8,7 @@ namespace BankingSystem.Models
         public int AccountNumber { set; get; }
         public int TransactionType { set; get; }
         public float Amount { set; get; }
-        public long RecieverAccount { set; get; }
+        public int RecieverAccount { set; get; }
         public DateTime TimeStamp { set; get; }
 
         public override bool Equals(object obj)
